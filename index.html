@@ -1,1 +1,70 @@
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111318">
+<title>JC Portões</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101116;color:#fff;font-family:Arial,sans-serif}
+header{padding:24px 20px;background:#191b22;border-bottom:3px solid #df252b}
+.logo{font-size:26px;font-weight:bold}.logo span{color:#f04449}
+small{color:#a8a8b3}
+main{max-width:540px;margin:auto;padding:22px}
+.card{background:#1c1e27;border:1px solid #343640;border-radius:18px;padding:24px;margin-bottom:20px}
+h2{margin:0 0 20px;font-size:19px}
+.status{text-align:center;padding:24px 0}
+.circle{width:110px;height:110px;border:6px solid #858995;border-radius:50%;display:grid;place-items:center;margin:auto;font-size:48px}
+#state{font-size:27px;font-weight:bold;margin:20px 0 8px}
+.muted{color:#a8a8b3;font-size:14px}
+button{background:#d82930;color:white;border:0;border-radius:10px;padding:15px;font-size:15px;font-weight:bold;cursor:pointer}
+.actions{display:flex;gap:10px;margin-top:20px}
+.actions button{flex:1}
+.secondary{background:#343743}
+.event{padding:14px 0;border-bottom:1px solid #363943;display:flex;justify-content:space-between;gap:10px}
+.event:last-child{border:0}
+footer{text-align:center;color:#888;padding:20px;font-size:12px}
+</style>
+</head>
+<body>
+<header><div class="logo"><span>JC</span> Portões</div><small>J Carlesso • Tecnologia e Inteligência</small></header>
+<main>
+<div class="card">
+<h2>Portão principal</h2>
+<div class="status">
+<div class="circle" id="circle">?</div>
+<div id="state">Estado desconhecido</div>
+<div class="muted" id="detail">Aguardando integração com a Tuya</div>
+</div>
+<div class="actions">
+<button onclick="simulate('Aberto')">Simular abertura</button>
+<button class="secondary" onclick="simulate('Fechado')">Simular fechamento</button>
+</div>
+</div>
+<div class="card"><h2>Histórico de eventos</h2><div id="history" class="muted">Nenhum evento registrado.</div></div>
+<div class="card"><h2>Notificações</h2><p class="muted">Alertas de abertura e fechamento serão habilitados após a integração com o servidor.</p><p class="muted">Modo atual: demonstração.</p></div>
+</main>
+<footer>JC Portões • Protótipo 1.0</footer>
+<script>
+const historyBox=document.getElementById('history');
+function simulate(status){
+ const opened=status==='Aberto';
+ document.getElementById('state').textContent='Portão '+status.toLowerCase();
+ document.getElementById('circle').textContent=opened?'↗':'✓';
+ document.getElementById('circle').style.borderColor=opened?'#e33b40':'#27b47a';
+ document.getElementById('detail').textContent='Simulação — não representa o portão real';
+ const time=new Date().toLocaleString('pt-BR');
+ if(historyBox.textContent.includes('Nenhum evento'))historyBox.textContent='';
+ const event=document.createElement('div');
+ event.className='event';
+ const label=document.createElement('strong');
+ label.textContent='Portão '+status.toLowerCase();
+ const date=document.createElement('small');
+ date.textContent=time;
+ event.append(label,date);
+ historyBox.prepend(event);
+}
+</script>
+</body>
+</html>
