@@ -76,7 +76,9 @@ def iniciar_monitoramento():
         )
         consumidor.add_message_listener(receber_evento)
         app.extensions["tuya_pulsar"] = consumidor
-        consumidor.start()
+        print("JC PORTOES: Iniciando conexao Pulsar", flush=True)
+consumidor.start()
+print("JC PORTOES: Metodo start retornou", flush=True)
         app.logger.info("Monitoramento Tuya iniciado")
     except Exception:
         app.logger.exception("Erro no monitoramento Tuya")
